@@ -1,5 +1,6 @@
 CTADIRAC project:
-* moved to git on Septembre 5th 2017
+* moved to CTAO GitLab on December 8th 2020
+* moved to GitHub on Septembre 5th 2017
 * add things, need add a licence GPLv3 ?
 
 Authors from svn:<br>
