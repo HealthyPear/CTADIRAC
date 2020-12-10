@@ -13,4 +13,6 @@ build:
     - ./install_dirac_client.sh
     - mv ../CTADIRAC .
     - export PYTHONPATH=$PWD:$PYTHONPATH
-    - python tests/ci_example.py
+    - pwd
+    - ls -l
+    - python CTADIRAC/tests/ci_example.py
