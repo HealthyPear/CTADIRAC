@@ -14,7 +14,8 @@ build:
     - wget http://cccta-dataserver.in2p3.fr/data/install_dirac_client.sh
     - chmod +x install_dirac_client.sh
     - ./install_dirac_client.sh
-    - export PYTHONPATH=$PWD:$PYTHONPATH
     - pwd
     - ls -l
+    - mv ../CTADIRAC .
+    - export PYTHONPATH=$PWD:$PYTHONPATH
     - python CTADIRAC/tests/ci_example.py
