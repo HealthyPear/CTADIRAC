@@ -7,11 +7,13 @@ variables:
 build:
   script:
     - cd ..
+    - mkdir CTADIRAC_test
+    - mv CTADIRAC CTADIRAC_test/
+    - cd CTADIRAC_test
     - mkdir -p myDirac; cd myDirac
     - wget http://cccta-dataserver.in2p3.fr/data/install_dirac_client.sh
     - chmod +x install_dirac_client.sh
     - ./install_dirac_client.sh
-    - mv ../CTADIRAC .
     - export PYTHONPATH=$PWD:$PYTHONPATH
     - pwd
     - ls -l
