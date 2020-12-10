@@ -1,0 +1,10 @@
+# dumb pipeline
+image: bregeon/ctadirac_prod_scripts
+
+variables:
+  GIT_STRATEGY: clone
+
+build:
+  script:
+    - pwd
+    - python utils/utils.py
