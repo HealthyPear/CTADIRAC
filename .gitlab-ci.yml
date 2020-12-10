@@ -1,10 +1,16 @@
 # dumb pipeline
-image: bregeon/ctadirac_prod_scripts
+image: cta-computing/dpps/CTADIRAC
 
 variables:
   GIT_STRATEGY: clone
 
 build:
   script:
-    - pwd
-    - python utils/utils.py
+    - cd ..
+    - mkdir myDirac; cd myDirac
+    - wget http://cccta-dataserver.in2p3.fr/data/install_dirac_client.sh
+    - chmod +x install_dirac_client.sh
+    - ./install_dirac_client.sh
+    - mv ../CTADIRAC .
+    - export PYTHONPATH=$PWD:$PYTHONPATH
+    - python tests/ci_example.py
