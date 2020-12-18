@@ -1,11 +1,14 @@
-[v1r62p4]
-* LA : Depends = DIRAC:v7r1p23
+[v1r6xpx]
+* JB : add dumb CI for gitlab
+
+[v1r62p1]
+* LA : Move to CTAO gitlab
 
 [v1r62p0]
 * MS PM : Depends = DIRAC:v7r1p20
       DIRAC support for ElasticSearch 7
 
-[v1r61px]
+[v1r61p1]
 * JB : new interface to ctapipe merge dl1 tool
       cone10 bug fix for Prod5b
       new Job and run Interface EvnDispProd5SingJob
