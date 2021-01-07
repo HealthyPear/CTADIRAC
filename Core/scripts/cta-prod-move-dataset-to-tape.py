@@ -52,11 +52,12 @@ if __name__ == '__main__':
     print('Found dataset %s with %d files.' % (name, n_files))
 
     # choose a metaKey
-    meta_key = 'analysis_prog'
-    meta_value = 'merge_simtel'
-    tag = ''
+    meta_key = 'MCCampaign'
+    meta_value = 'PROD3'
+    tag = 'v2'
     do_it = True
-    se_list = ['CC-IN2P3-Disk', 'DESY-ZN-Disk', 'CYF-STORM-Disk']
+    se_list = ['DESY-ZN-Disk', 'LPNHE-Disk', 'CNAF-Disk', 'CYF-STORM-Disk', 'LAPP-Disk',
+               'CEA-Disk', 'CC-IN2P3-Disk']
 
     # create Transformation
     data_ts = createDataTransformation(flavour='Moving',
