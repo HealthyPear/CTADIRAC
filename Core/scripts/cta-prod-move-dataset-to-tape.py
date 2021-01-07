@@ -52,8 +52,9 @@ if __name__ == '__main__':
     print('Found dataset %s with %d files.' % (name, n_files))
 
     # choose a metaKey
-    meta_key = 'MCCampaign'
-    meta_value = 'PROD3'
+    meta_key = 'site'
+    meta_value = meta_query['site']
+
     tag = 'v2'
     do_it = True
     se_list = ['DESY-ZN-Disk', 'LPNHE-Disk', 'CNAF-Disk', 'CYF-STORM-Disk', 'LAPP-Disk',
