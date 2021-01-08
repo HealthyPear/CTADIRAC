@@ -135,7 +135,7 @@ class EvnDispProd5SingJob(Job):
         meta_data_field_json = json.dumps(meta_data_field)
 
         # register Data
-        data_output_pattern = './Data/*.DL1.root'
+        data_output_pattern = './Data/*.simtel.DL1.root'
         scripts = '../CTADIRAC/Core/scripts/'
         dm_step = self.setExecutable(scripts + 'cta-prod-managedata.py',
                                      arguments="'%s' '%s' '%s' %s '%s' %s %s '%s' Data" %
