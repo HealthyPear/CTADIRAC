@@ -110,7 +110,7 @@ def run_simulation(args):
         job.start_run_number = '0'
         job.run_number = '@{JOB_ID}'  # dynamic
         job.setupWorkflow(debug=False)
-        tag = '_gcc83_ok'
+        tag = '_gcc83'
         trans_name = 'Prod5b_Pipeline_NSB_%s_%s_%s_%s%s' %\
                     (job.cta_site, job.particle, job.pointing_dir, job.zenith_angle, tag)
         result = submit_trans(job, trans_name)
