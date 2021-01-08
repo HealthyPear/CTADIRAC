@@ -38,7 +38,7 @@ def get_dataset_info(dataset_name):
 
 #########################################################
 if __name__ == '__main__':
-    """
+    """ @todo improve arguments handling
     """
     Script.parseCommandLine(ignoreErrors=True)
     argss = Script.getPositionalArgs()
@@ -52,13 +52,13 @@ if __name__ == '__main__':
     print('Found dataset %s with %d files.' % (name, n_files))
 
     # choose a metaKey
-    meta_key = 'site'
-    meta_value = meta_query['site']
+    meta_key = 'MCCampaign'
+    meta_value = meta_query['MCCampaign']
+    tag = dataset_name.replace('meta_value', '')
 
-    tag = 'v2'
     do_it = True
-    se_list = ['DESY-ZN-Disk', 'LPNHE-Disk', 'CNAF-Disk', 'CYF-STORM-Disk', 'LAPP-Disk',
-               'CEA-Disk', 'CC-IN2P3-Disk']
+    se_list = ['DESY-ZN-Disk', 'LPNHE-Disk', 'CNAF-Disk', 'CYF-STORM-Disk',
+               'LAPP-Disk', 'CEA-Disk', 'CC-IN2P3-Disk']
 
     # create Transformation
     data_ts = createDataTransformation(flavour='Moving',
