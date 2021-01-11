@@ -34,7 +34,7 @@ class EvnDispProd5SingJob(Job):
         self.setName('Evndisplay_CalibReco')
         self.package = 'evndisplay'
         self.version = 'eventdisplay-cta-dl1-prod5.v02'
-        self.compiler='gcc48_default'
+        self.compiler = 'gcc48_default'
         self.container = True
         self.program_category = 'calibimgreco'
         self.prog_name = 'evndisp'
@@ -109,7 +109,7 @@ class EvnDispProd5SingJob(Job):
         # step 3 verify input data size
         # arguments are nbFiles=0 (not used) and fileSize=1000kB
         eiv_step = self.setExecutable('cta-prod3-verifysteps',
-                            arguments="generic 1 1000 '*.simtel.zst'",
+                            arguments="generic 0 1000 '*.simtel.zst'",
                             logFile='Verify_EvnDispInputs_Log.txt')
         eiv_step['Value']['name'] = 'Step%i_VerifyEvnDispInputs' % i_step
         eiv_step['Value']['descr_short'] = 'Verify EvnDisp Inputs'
