@@ -91,6 +91,7 @@ def launch_job(args):
 
     # job setup - 72 hours
     job = EvnDispProd5SingJob(cpuTime=259200.)
+    job.version = 'eventdisplay-cta-dl1-prod5.v03'
     # override for testing
     job.setName('Prod5b_EvnDisp')
     # output
