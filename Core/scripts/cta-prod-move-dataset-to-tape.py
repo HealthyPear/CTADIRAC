@@ -50,10 +50,10 @@ if __name__ == '__main__':
     # Check input data set information
     name, n_files, size, meta_query = get_dataset_info(dataset_name)
     print('Found dataset %s with %d files.' % (name, n_files))
-
+    print(meta_query)
     # choose a metaKey
-    meta_key = 'MCCampaign'
-    meta_value = meta_query['MCCampaign']
+    meta_key = 'site'
+    meta_value = meta_query['site']
     tag = dataset_name.replace('meta_value', '')
 
     do_it = True
