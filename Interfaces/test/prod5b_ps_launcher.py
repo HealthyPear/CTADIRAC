@@ -1,6 +1,6 @@
 """
     Launcher script to launch a production with 2 steps
-    simulation Step: Prod5MCPipeNSBJob
+    simulation Step: Prod5bMCPipeNSBJob
     calibimgreco Step: EvnDispProd5SingJob
 
         L. Arrabito
@@ -19,7 +19,7 @@ import DIRAC
 
 from DIRAC.ProductionSystem.Client.ProductionClient import ProductionClient
 from DIRAC.ProductionSystem.Client.ProductionStep import ProductionStep
-from CTADIRAC.Interfaces.API.Prod5MCPipeNSBJob import Prod5MCPipeNSBJob
+from CTADIRAC.Interfaces.API.Prod5bMCPipeNSBJob import Prod5bMCPipeNSBJob
 from CTADIRAC.Interfaces.API.EvnDispProd5SingJob import EvnDispProd5SingJob
 from CTADIRAC.Core.Utilities.tool_box import get_dataset_MQ
 from DIRAC.Core.Workflow.Parameter import Parameter
@@ -54,7 +54,7 @@ def build_simulation_step(DL0_data_set, name_tag=''):
 
     # Here define the job description (i.e. Name, Executable, etc.)
     # to be associated to the first ProductionStep, as done when using the TS
-    job1 = Prod5MCPipeNSBJob()
+    job1 = Prod5bMCPipeNSBJob()
     job1.version = '2020-06-29b'
     job1.compiler = 'gcc83_matchcpu'
     # Initialize JOB_ID
