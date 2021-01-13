@@ -25,7 +25,7 @@ from CTADIRAC.Core.Utilities.tool_box import get_dataset_MQ
 from DIRAC.Core.Workflow.Parameter import Parameter
 
 
-def build_simulation_step(DL0_data_set):
+def build_simulation_step(DL0_data_set, name_tag=''):
     ''' Setup Corsika + sim_telarray step
 
     Note that there is no InputQuery,
@@ -35,8 +35,10 @@ def build_simulation_step(DL0_data_set):
     '''
     # Note that there is no InputQuery,
     # since jobs created by this steps don't require any InputData
+    DIRAC.gLogger.notice('MC Production step')
     prod_step_1 = ProductionStep()
     prod_step_1.Name = 'Simulation_%s' % DL0_data_set.replace('AdvancedBaseline_NSB1x_','')
+    prod_step_1.Name += name_tag
     prod_step_1.Type = 'MCSimulation'
     prod_step_1.Outputquery = get_dataset_MQ(DL0_data_set)
     prod_step_1.Outputquery['nsb'] = {'in': [1, 5]}
@@ -78,7 +80,7 @@ def build_simulation_step(DL0_data_set):
     return prod_step_1
 
 
-def build_evndisp_step(DL0_data_set, nsb=1):
+def build_evndisp_step(DL0_data_set, nsb=1, name_tag=''):
     ''' Define a new EventDisplay analysis production step
 
     @return ProductionStep object
@@ -92,6 +94,7 @@ def build_evndisp_step(DL0_data_set, nsb=1):
 
     prod_step_2 = ProductionStep()
     prod_step_2.Name = 'Analysis_'+DL0_data_set_NSB.replace('AdvancedBaseline_', '').replace('DL0', 'DL1')
+    prod_step_2.Name += name_tag
     prod_step_2.Type = 'DataReprocessing'  # This corresponds to the Transformation Type
     prod_step_2.Inputquery = get_dataset_MQ(DL0_data_set_NSB)
     prod_step_2.Outputquery = get_dataset_MQ(DL0_data_set_NSB.replace('DL0', 'DL1'))
@@ -121,11 +124,13 @@ def build_evndisp_step(DL0_data_set, nsb=1):
 if __name__ == '__main__':
     # get arguments
     args = Script.getPositionalArgs()
-    if len(args) != 1:
-        DIRAC.gLogger.error('At least 1 argument required: DL0_data_set')
+    if len(args) < 1:
+        DIRAC.gLogger.error('At least 1 argument required: DL0_data_set_name')
         DIRAC.exit(-1)
     DL0_data_set = args[0]
-    prod_name = DL0_data_set.replace('AdvancedBaseline_NSB1x_','')+'_DL1'
+    if len(args) == 2:
+        tag = args[1]
+    prod_name = DL0_data_set.replace('AdvancedBaseline_NSB1x_', '')+'_DL1'
 
     ##################################
     # Create the production
@@ -133,18 +138,18 @@ if __name__ == '__main__':
 
     ##################################
     # Define the first ProductionStep (Corsika+sim_telarray)
-    prod_step_1 = build_simulation_step(DL0_data_set)
+    prod_step_1 = build_simulation_step(DL0_data_set, name_tag=tag)
     # Add the step to the production
     prod_sys_client.addProductionStep(prod_step_1)
 
     ##################################
     # Define EventDisplay analysis steps and add them to the production
     # dark nsb = 1
-    prod_step_2 = build_evndisp_step(DL0_data_set, nsb=1)
+    prod_step_2 = build_evndisp_step(DL0_data_set, nsb=1, name_tag=tag)
     prod_step_2.ParentStep = prod_step_1
     prod_sys_client.addProductionStep(prod_step_2)
     # moon nsb = 5
-    prod_step_3 = build_evndisp_step(DL0_data_set, nsb=5)
+    prod_step_3 = build_evndisp_step(DL0_data_set, nsb=5, name_tag=tag)
     prod_step_3.ParentStep = prod_step_1
     prod_sys_client.addProductionStep(prod_step_3)
 
