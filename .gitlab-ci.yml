@@ -5,6 +5,8 @@ variables:
   GIT_STRATEGY: clone
 
 build:
+  tag:
+    - benchmarks
   script:
     - cd ..
     - rm -rf CTADIRAC_test
