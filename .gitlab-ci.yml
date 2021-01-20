@@ -5,7 +5,7 @@ variables:
   GIT_STRATEGY: clone
 
 build:
-  tag:
+  tags:
     - benchmarks
   script:
     - cd ..
