@@ -1,3 +1,6 @@
+[v1r62p5]
+* JB : running Prod5b Paranal 60deg
+
 [v1r62p2]
 * JB : add dumb CI for gitlab
        update cta-prod-move-dataset-to-tape with list of SE
