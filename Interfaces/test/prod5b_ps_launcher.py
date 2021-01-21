@@ -38,7 +38,7 @@ def build_simulation_step(DL0_data_set, name_tag=''):
     DIRAC.gLogger.notice('MC Production step')
     prod_step_1 = ProductionStep()
     prod_step_1.Name = 'Simulation_%s' % DL0_data_set.replace('AdvancedBaseline_NSB1x_','')
-    prod_step_1.Name += '-%s' % name_tag
+    prod_step_1.Name += '%s' % name_tag
     prod_step_1.Type = 'MCSimulation'
     prod_step_1.Outputquery = get_dataset_MQ(DL0_data_set)
     prod_step_1.Outputquery['nsb'] = {'in': [1, 5]}
@@ -94,7 +94,7 @@ def build_evndisp_step(DL0_data_set, nsb=1, name_tag=''):
 
     prod_step_2 = ProductionStep()
     prod_step_2.Name = 'Analysis_'+DL0_data_set_NSB.replace('AdvancedBaseline_', '').replace('DL0', 'DL1')
-    prod_step_2.Name += '-%s' % name_tag
+    prod_step_2.Name += '%s' % name_tag
     prod_step_2.Type = 'DataReprocessing'  # This corresponds to the Transformation Type
     prod_step_2.Inputquery = get_dataset_MQ(DL0_data_set_NSB)
     prod_step_2.Outputquery = get_dataset_MQ(DL0_data_set_NSB.replace('DL0', 'DL1'))
@@ -123,6 +123,7 @@ def build_evndisp_step(DL0_data_set, nsb=1, name_tag=''):
 #########################################################
 if __name__ == '__main__':
     # get arguments
+    tag = ''
     args = Script.getPositionalArgs()
     if len(args) < 1:
         DIRAC.gLogger.error('At least 1 argument required: DL0_data_set_name')
