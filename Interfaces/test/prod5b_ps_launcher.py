@@ -132,7 +132,8 @@ if __name__ == '__main__':
     if len(args) == 2:
         tag = args[1]
     prod_name = DL0_data_set.replace('AdvancedBaseline_NSB1x_', '')+'_DL1'
-    prod_name += '-%s' % tag
+    if tag != '':
+        prod_name += '-%s' % tag
 
     ##################################
     # Create the production
