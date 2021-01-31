@@ -29,8 +29,8 @@ class Prod3MCPipeBaselineZstdJob(Prod3MCPipeBaselineJob):
     """
 #    super(Prod3MCPipeBaselineJob, self).__init__()
     Prod3MCPipeBaselineJob.__init__(self, cpuTime)
-    self.version='2017-09-28_zstd'
-
+    self.version = '2017-09-28_zstd'
+    self.extra_tag = ''  # or --highE
 
   def setupWorkflow(self, debug=False):
     """ Override the base class job workflow to adapt to NSB test simulations
@@ -46,7 +46,7 @@ class Prod3MCPipeBaselineZstdJob(Prod3MCPipeBaselineJob):
 
     # step 2
     swStep = self.setExecutable( 'cta-prod3-setupsw',
-                              arguments='%s %s simulations centos7-gcc48'% (self.package, self.version),\
+                              arguments='%s %s simulations sl6-gcc44'% (self.package, self.version),\
                               logFile='SetupSoftware_Log.txt')
     swStep['Value']['name'] = 'Step%i_SetupSoftware' % iStep
     swStep['Value']['descr_short'] = 'Setup software'
@@ -63,9 +63,9 @@ class Prod3MCPipeBaselineZstdJob(Prod3MCPipeBaselineJob):
         DIRAC.exit(-1)
 
     csStep = self.setExecutable( prod_script, \
-                              arguments = '--start_run %s --run %s %s %s %s %s' % \
+                              arguments = '--start_run %s --run %s %s %s %s %s %s' % \
                                          ( self.start_run_number, self.run_number, \
-                                           self.cta_site,\
+                                           self.extra_tag, self.cta_site,\
                                            self.particle, self.pointing_dir, self.zenith_angle ), \
                               logFile='CorsikaSimtel_Log.txt')
     csStep['Value']['name']='Step%i_CorsikaSimtel'%iStep
@@ -140,15 +140,15 @@ class Prod3MCPipeBaselineZstdJob(Prod3MCPipeBaselineJob):
     dmStep['Value']['descr_short'] = 'Save log files to SE and register them in DFC'
     iStep += 1
     ## histogram
-    outputpattern = './Data/sim_telarray/*/*/Histograms/*baseline.hdata.gz'
-    dmStep = self.setExecutable('../CTADIRAC/Core/scripts/cta-analysis-managedata.py',
-                              arguments = "'%s' '%s' '%s' %s '%s' %s %s '%s' Histograms" % \
-                              (mdjson, mdfieldjson, file_md_json, self.basepath,
-                               outputpattern, self.package, self.program_category, self.catalogs),
-                              logFile = 'Histo_DataManagement_Log.txt')
-    dmStep['Value']['name'] = 'Step%i_Histo_DataManagement' % iStep
-    dmStep['Value']['descr_short'] = 'Save hitograms files to SE and register them in DFC'
-    iStep += 1
+    # outputpattern = './Data/sim_telarray/*/*/Histograms/*baseline.hdata.gz'
+    # dmStep = self.setExecutable('../CTADIRAC/Core/scripts/cta-analysis-managedata.py',
+    #                           arguments = "'%s' '%s' '%s' %s '%s' %s %s '%s' Histograms" % \
+    #                           (mdjson, mdfieldjson, file_md_json, self.basepath,
+    #                            outputpattern, self.package, self.program_category, self.catalogs),
+    #                           logFile = 'Histo_DataManagement_Log.txt')
+    # dmStep['Value']['name'] = 'Step%i_Histo_DataManagement' % iStep
+    # dmStep['Value']['descr_short'] = 'Save hitograms files to SE and register them in DFC'
+    # iStep += 1
 
     # Number of showers is passed via an environment variable
     self.setExecutionEnv( {'NSHOW'        : '%s' % self.nShower} )
