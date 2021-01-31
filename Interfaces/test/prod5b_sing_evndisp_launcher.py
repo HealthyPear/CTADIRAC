@@ -91,6 +91,7 @@ def launch_job(args):
 
     # job setup - 72 hours
     job = EvnDispProd5SingJob(cpuTime=259200.)
+    job.version = 'eventdisplay-cta-dl1-prod5.v03'
     # override for testing
     job.setName('Prod5b_EvnDisp')
     # output
@@ -116,6 +117,7 @@ def launch_job(args):
         job.set_file_meta_data(nsb=output_meta_data['nsb']['='])
         # adjust calibration file
         job.ts_task_id = '@{JOB_ID}'  # dynamic
+        job.group_size = group_size   # for the input files verification
         job.setupWorkflow(debug=False)
         job.setType('EvnDisp3')  # mandatory *here*
         result = submit_trans(job, trans_name, input_meta_query, group_size)

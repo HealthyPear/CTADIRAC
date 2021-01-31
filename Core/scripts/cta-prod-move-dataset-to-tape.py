@@ -38,7 +38,7 @@ def get_dataset_info(dataset_name):
 
 #########################################################
 if __name__ == '__main__':
-    """
+    """ @todo improve arguments handling
     """
     Script.parseCommandLine(ignoreErrors=True)
     argss = Script.getPositionalArgs()
@@ -50,13 +50,15 @@ if __name__ == '__main__':
     # Check input data set information
     name, n_files, size, meta_query = get_dataset_info(dataset_name)
     print('Found dataset %s with %d files.' % (name, n_files))
-
+    print(meta_query)
     # choose a metaKey
-    meta_key = 'analysis_prog'
-    meta_value = 'merge_simtel'
-    tag = ''
+    meta_key = 'site'
+    meta_value = meta_query['site']
+    tag = dataset_name.replace('meta_value', '')
+
     do_it = True
-    se_list = ['CC-IN2P3-Disk', 'DESY-ZN-Disk', 'CYF-STORM-Disk']
+    se_list = ['DESY-ZN-Disk', 'LPNHE-Disk', 'CNAF-Disk', 'CYF-STORM-Disk',
+               'LAPP-Disk', 'CEA-Disk', 'CC-IN2P3-Disk']
 
     # create Transformation
     data_ts = createDataTransformation(flavour='Moving',

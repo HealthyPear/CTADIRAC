@@ -14,7 +14,6 @@ export DIRAC_ROOT=/opt/dirac
 # Retrieve the latest CTADIRAC release from defaults. Modified for dirac v7
 PYTHON_VERSION=27
 RELEASE=$(curl -s -L http://cta-dirac.in2p3.fr/DIRAC/defaults/cta.cfg | grep Release | tail -1 | awk -F "= " '{print $2}')
-# LCGVER=$(curl -s -L http://cta-dirac.in2p3.fr/DIRAC/defaults/cta.cfg | grep LcgVer | awk -F "= " '{print $2}')
 
 yum -y update
 
@@ -117,6 +116,10 @@ if ! [ -d "/tmp/etc/grid-security/certificates" ]
   mkdir -p /tmp/etc/grid-security
   cp -R /etc/grid-security/certificates /tmp/etc/grid-security
 fi
+
+# Add 2 variables
+export COLUMNS=155
+export TERM=xterm-256color
 EOF
 
 # Install python modules for protopipe inside DIRAC environment

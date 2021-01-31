@@ -16,7 +16,8 @@ from DIRAC.Core.Utilities.ReturnValues import returnSingleResult
 # Jobs status dictionnary
 BASE_STATUS_DIR = {'Received': 0, 'Matched': 0, 'Waiting': 0, 'Running': 0,
                    'Failed': 0, 'Stalled': 0, 'Rescheduled': 0, 'Checking': 0,
-                   'Done': 0, 'Completed': 0, 'Killed': 0, 'Total': 0}
+                   'Done': 0, 'Completing': 0, 'Completed': 0, 'Killed': 0,
+                   'Total': 0}
 
 # Data level meta data id
 DATA_LEVEL_METADATA_ID = {'MC0': -3,  'R1': -2, 'R0': -1,

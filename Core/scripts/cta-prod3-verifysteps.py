@@ -22,14 +22,16 @@ Script.setUsageMessage('\n'.join([ __doc__.split('\n')[1],
 
 Script.parseCommandLine()
 
+
 def clean_output_file(output_files):
     """ Delete Local Files
     """
     DIRAC.gLogger.info('Deleting Local Files')
     for afile in output_files:
-        DIRAC.gLogger.warn('Remove local File %s' % afile)
-        os.remove(afile)
+        DIRAC.gLogger.warn('Remove local File %s' % afile.strip())
+        os.remove(afile.strip())
     return DIRAC.S_OK()
+
 
 def verify_corsika():
     """ Verify a generic Corsika log file
@@ -39,23 +41,30 @@ def verify_corsika():
     # get list of output files
     log_file = glob.glob('Data/corsika/run*/run*.log')
     if len(log_file) != 1:
-        DIRAC.gLogger.error('"=== END OF RUN ===" not found!')
+        DIRAC.gLogger.error('no log file found!')
         return DIRAC.S_ERROR()
 
     # check EOR tag
     tag = '=== END OF RUN ==='
     content = open(log_file[0]).read()
-    if content.find(tag)<0:
-        DIRAC.gLogger.error('"%s" tag not found!'%tag)
-        corsika_files = glob.glob('Data/corsika/run*/*corsika.*z*')
-        if len(corsika_files)>0:
+    if content.find(tag) < 0:
+        DIRAC.gLogger.error('"%s" tag not found!' % tag)
+        corsika_files = list(os.popen('find . -iname "*corsika.*z*"'))
+        if len(corsika_files) > 0:
             clean_output_file(corsika_files)
-        simtel_files = glob.glob('Data/sim_telarray/*/*/Data/*simtel.*z*')
-        if len(simtel_files)>0:
+        simtel_files = list(os.popen('find . -iname "*simtel.*z*"'))
+        if len(simtel_files) > 0:
             clean_output_file(simtel_files)
+        log_gz_files = list(os.popen('find . -iname "*log.*z*"'))
+        if len(log_gz_files) > 0:
+            clean_output_file(log_gz_files)
+        log_hist_files = list(os.popen('find . -iname "*log_hist.tar"'))
+        if len(log_hist_files) > 0:
+            clean_output_file(log_hist_files)
         return DIRAC.S_ERROR()
 
     return DIRAC.S_OK()
+
 
 def verifySimtel(nbFiles=31, minSize=50.):
     """ Verify a PROD3 simtel step
@@ -66,13 +75,14 @@ def verifySimtel(nbFiles=31, minSize=50.):
     """
     DIRAC.gLogger.info('Verifying Simtel step')
     # get list of output files
-    outputFiles=glob.glob('Data/simtel_tmp/Data/*simtel.*z*')
+    outputFiles = glob.glob('Data/simtel_tmp/Data/*simtel.*z*')
 
     # check the number of output files --- could be done by telescope type
-    N=len(outputFiles)
-    if N != nbFiles :
-        DIRAC.gLogger.error('Wrong number of Simtel files : %s instead of %s'%(N, nbFiles ) )
-        clean_output_file(outputFiles )
+    N = len(outputFiles)
+    if N != nbFiles:
+        DIRAC.gLogger.error('Wrong number of Simtel files : %s instead of %s' %
+                            (N, nbFiles))
+        clean_output_file(outputFiles)
         return DIRAC.S_ERROR()
 
     # check the file size --- could be done by telescope type

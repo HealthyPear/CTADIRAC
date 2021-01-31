@@ -34,7 +34,7 @@ class EvnDispProd5SingJob(Job):
         self.setName('Evndisplay_CalibReco')
         self.package = 'evndisplay'
         self.version = 'eventdisplay-cta-dl1-prod5.v02'
-        self.compiler='gcc48_default'
+        self.compiler = 'gcc48_default'
         self.container = True
         self.program_category = 'calibimgreco'
         self.prog_name = 'evndisp'
@@ -45,6 +45,7 @@ class EvnDispProd5SingJob(Job):
         self.file_meta_data = dict()
         self.catalogs = json.dumps(['DIRACFileCatalog', 'TSCatalog'])
         self.ts_task_id = 0
+        self.group_size = 1
 
     def set_meta_data(self, tel_sim_md):
         """ Set EventDisplay meta data
@@ -109,7 +110,8 @@ class EvnDispProd5SingJob(Job):
         # step 3 verify input data size
         # arguments are nbFiles=0 (not used) and fileSize=1000kB
         eiv_step = self.setExecutable('cta-prod3-verifysteps',
-                            arguments="generic 1 1000 '*.simtel.zst'",
+                            arguments="generic %d 1000 '*.simtel.zst'"
+                                       % self.group_size,
                             logFile='Verify_EvnDispInputs_Log.txt')
         eiv_step['Value']['name'] = 'Step%i_VerifyEvnDispInputs' % i_step
         eiv_step['Value']['descr_short'] = 'Verify EvnDisp Inputs'
@@ -135,7 +137,7 @@ class EvnDispProd5SingJob(Job):
         meta_data_field_json = json.dumps(meta_data_field)
 
         # register Data
-        data_output_pattern = './Data/*.DL1.root'
+        data_output_pattern = './Data/*.simtel.DL1.root'
         scripts = '../CTADIRAC/Core/scripts/'
         dm_step = self.setExecutable(scripts + 'cta-prod-managedata.py',
                                      arguments="'%s' '%s' '%s' %s '%s' %s %s '%s' Data" %

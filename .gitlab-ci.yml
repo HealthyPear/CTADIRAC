@@ -1,0 +1,25 @@
+# dumb pipeline
+image: cta-computing/dpps/CTADIRAC
+
+variables:
+  GIT_STRATEGY: clone
+
+build:
+  tags:
+    - benchmarks
+  script:
+    - cd ..
+    - rm -rf CTADIRAC_test
+    - mkdir CTADIRAC_test
+    - mv CTADIRAC CTADIRAC_test/
+    - cd CTADIRAC_test
+    - mkdir -p myDirac; cd myDirac
+    - wget http://cccta-dataserver.in2p3.fr/data/install_dirac_client.sh
+    - chmod +x install_dirac_client.sh
+    - ./install_dirac_client.sh
+    - pwd
+    - ls -l
+    - mv ../CTADIRAC .
+    - source bashrc
+    - export PYTHONPATH=$PWD:$PYTHONPATH
+    - python CTADIRAC/tests/ci_example.py
